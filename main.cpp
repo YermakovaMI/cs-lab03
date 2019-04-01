@@ -31,36 +31,28 @@ input_numbers(size_t count) {
 
     }
 
-int main() {
-    // Ввод данных
-    size_t number_count;
-    cerr << "Enter number count: ";
-    cin >> number_count;
-
-    cerr << "Enter numbers: ";
-    const vector<double> numbers = input_numbers(number_count);
-
-
-    size_t bin_count;
-    cerr << "Enter column count: ";
-    cin >> bin_count;
-
-    // Обработка данных
-
-
-        double min = numbers[0];
-        double max = numbers[0];
-        find_minmax (numbers, &min, &max);
+//функция расчёта количества чисел
+vector<size_t> make_histogram(vector <double> numbers, size_t bin_count )
+{
+    double min = numbers[0];
+    double max = numbers[0];
+    find_minmax (numbers, &min, &max);
     vector<size_t> bins(bin_count);
-    for (double number : numbers) {
+    for (double number : numbers)
+    {
         size_t bin = (size_t)((number - min) / (max - min) * bin_count);
-        if (bin == bin_count) {
+        if (bin == bin_count)
+        {
             bin--;
         }
         bins[bin]++;
     }
+    return bins;
 
-    // Вывод данных
+}
+
+//функция отображения гистограммы
+    size_t  show_histogram_text(vector<size_t> bins) {
     const size_t SCREEN_WIDTH = 80;
     const size_t MAX_ASTERISK = SCREEN_WIDTH - 4 - 1;
 
@@ -92,6 +84,28 @@ int main() {
         }
         cout << '\n';
     }
+    }
 
-    return 0;
-}
+
+
+
+    int main() {
+    // Ввод данных
+    size_t number_count;
+    cerr << "Enter number count: ";
+    cin >> number_count;
+
+    cerr << "Enter numbers: ";
+    const vector<double> numbers = input_numbers(number_count);
+
+
+    size_t bin_count;
+    cerr << "Enter column count: ";
+    cin >> bin_count;
+
+
+    // Вывод данных
+    const vector<size_t> bins = make_histogram(numbers, bin_count);
+
+    show_histogram_text(bins);
+    }
